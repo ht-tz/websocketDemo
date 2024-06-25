@@ -2,7 +2,7 @@
  * @Author: htz
  * @Date: 2024-06-03 23:54:21
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-06-04 14:51:54
+ * @LastEditTime: 2024-06-25 22:25:48
  * @Description: 请填写简介
 -->
 
@@ -13,21 +13,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    c
+
     <script src="./Socket.js"></script>
 
 <body>
-
+    <div id="message"></div>
+    <div>
+        <button onclick="myFunction()">点我</button>
+    </div>
+    <div id="po"></div>
     <script>
         const ws = new Socket({
-            url: 'ws://localhost:3001/base',
+            url: 'ws://localhost:3005/base',
             name: "test",
-            isHeart: true,
+            timeout: 5000, // 超时时间
+            isHeart: true, // 心跳检测机制
             isReconnection: true,
             received: function (data) {
-                console.log('监听服务器返回的消息');
+                //事件监听回调函数
+                acceptData(data)
             }
         })
+
+        function acceptData(msg) {
+            let dth = document.getElementById('message')
+            if (msg === "pong") {
+                dth.innerHTML = msg
+            } else {
+                dth.innerHTML = msg
+            }
+
+        }
+
+        // 新条件检测数据
+        function myFunction() {
+            debugger
+            ws.closeSocket(1)
+        }
+
+
 
         let data = {
             type: "init"
@@ -45,6 +69,8 @@
             // 手动关闭
             ws.close()
         }
+
+
     </script>
 </body>
 

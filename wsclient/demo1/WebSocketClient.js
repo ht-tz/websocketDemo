@@ -2,7 +2,7 @@
  * @Author: htz
  * @Date: 2024-06-03 23:14:26
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2024-06-03 23:50:12
+ * @LastEditTime: 2024-06-25 21:42:28
  * @Description: 测试数据
  */
 import { EventDispatcher } from './EventDispatcher'
@@ -13,12 +13,13 @@ export class WebSocketClient extends EventDispatcher {
   // 重连次数
   reconnectAttempts = 0
 
+  //最大重连次数
   maxReconnectAttempts = 10
 
   // 重连时间间隔
   reconnectInterval = 1000
 
-  //心跳间隔
+  //心跳间隔 30s
   heartbeatInterval = 1000 * 30
 
   //计时器id
@@ -83,6 +84,7 @@ export class WebSocketClient extends EventDispatcher {
       this.dispatchEvent('open', event)
     }
 
+    //fa'song
     this.socket.onmessage = (event) => {
       this.dispatchEvent('message', event)
       this.startHeartbeat()
